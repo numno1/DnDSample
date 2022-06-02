@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { GridSize, BoxProps, GridProps, PaperProps } from "@mui/material";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend";
 import {
   StyledPaper,
   StyledTitle,
@@ -226,9 +227,11 @@ export const Equivalencies: React.FC = () => {
     }
   };
 
+  const isMobile = false;
+
   return (
     // DnDProviderで全体を囲む
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
       <DataItemRoot>
         <DataItemTitle>'イクイバレンシ情報'</DataItemTitle>
         <DataItemBody>
