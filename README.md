@@ -1,2 +1,3 @@
 # DnDSample
-Created with CodeSandbox
+
+[React-DnD の仕様](https://react-dnd.github.io/react-dnd/about)
