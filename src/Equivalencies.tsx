@@ -111,7 +111,7 @@ export const DataItemMovableRow: React.FC<DataItemMovableRowProps> = (
     // item: dropした行のDnD Object
     // no: drop先の行の番号
     // moveRow: item.indexとnoを使ってequivsを並べ替えて格納する
-    drop(item: DndObject) {
+    hover(item: DndObject) {
       moveRow(item, no);
     }
   });
@@ -224,6 +224,8 @@ export const Equivalencies: React.FC = () => {
           }
         })
       );
+      // item.indexを書き換えるのは良くない気がするが・・
+      item.index = no;
     }
   };
 
