@@ -44,6 +44,7 @@ export const DraggingRow: React.FC = () => {
         left: 0,
         transform: `translate(${x}px, ${y}px)`,
         opacity: "40%",
+        // ↓を入れないと動かない
         pointerEvents: "none"
       }}
     >
