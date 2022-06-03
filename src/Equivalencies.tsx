@@ -1,9 +1,7 @@
 import "./styles.css";
 import React, { useState } from "react";
 import { GridSize, BoxProps, GridProps, PaperProps } from "@mui/material";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { TouchBackend } from "react-dnd-touch-backend";
+import { useDrag, useDrop } from "react-dnd";
 import {
   StyledPaper,
   StyledTitle,
@@ -44,6 +42,9 @@ export const DataItemRow: React.FC<GridProps> = (props) => {
 
 type DataItemMovableRowProps = GridProps & {
   no: number;
+  server: string;
+  priority: number;
+  tag: string;
   moveRow: any;
 };
 
@@ -89,6 +90,9 @@ const equivsSample: Equivs[] = [
 
 interface DndObject {
   index: number;
+  priority?: string;
+  server?: string;
+  tag?: string;
 }
 
 // ここからDataItem.tsxのコピー
@@ -101,7 +105,7 @@ interface DndObject {
 export const DataItemMovableRow: React.FC<DataItemMovableRowProps> = (
   props
 ) => {
-  const { no, moveRow, ...movableRowProps } = props;
+  const { no, server, priority, tag, moveRow, ...movableRowProps } = props;
 
   // useDrop: Drop時に、React-dndのシステムとコンポーネントを紐づけるhook
   const [, drop] = useDrop({
@@ -122,7 +126,7 @@ export const DataItemMovableRow: React.FC<DataItemMovableRowProps> = (
     type: "row",
     // item:Dragした行に関する情報を格納するDnDObject。本サンプルでは行indexだけ必要なのでシンプル
     // オブジェクトじゃなくて関数を書くこともできるらしい(マニュアル参照)
-    item: { index: no }
+    item: { server, priority, tag, index: no }
   });
 
   return (
@@ -229,38 +233,37 @@ export const Equivalencies: React.FC = () => {
     }
   };
 
-  const isMobile = false;
-
   return (
     // DnDProviderで全体を囲む
-    <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
-      <DataItemRoot>
-        <DataItemTitle>'イクイバレンシ情報'</DataItemTitle>
-        <DataItemBody>
-          <DataItemRow>
-            <DataItemName xs={mobileGrid[0]}>サーバー</DataItemName>
-            <DataItemName xs={mobileGrid[1]}>プライオリティ</DataItemName>
-            <DataItemName xs={mobileGrid[2]}>タグ</DataItemName>
-          </DataItemRow>
-          {equivs.map((equiv) => (
-            <DataItemMovableRow
-              key={equiv.server}
-              no={equiv.no}
-              moveRow={moveRow}
-            >
-              <DataItemValue horizontal xs={mobileGrid[0]}>
-                {equiv.server}
-              </DataItemValue>
-              <DataItemValue horizontal xs={mobileGrid[1]}>
-                {equiv.priority}
-              </DataItemValue>
-              <DataItemValue horizontal xs={mobileGrid[2]}>
-                {equiv.tag}
-              </DataItemValue>
-            </DataItemMovableRow>
-          ))}
-        </DataItemBody>
-      </DataItemRoot>
-    </DndProvider>
+    <DataItemRoot>
+      <DataItemTitle>'イクイバレンシ情報'</DataItemTitle>
+      <DataItemBody>
+        <DataItemRow>
+          <DataItemName xs={mobileGrid[0]}>サーバー</DataItemName>
+          <DataItemName xs={mobileGrid[1]}>プライオリティ</DataItemName>
+          <DataItemName xs={mobileGrid[2]}>タグ</DataItemName>
+        </DataItemRow>
+        {equivs.map((equiv) => (
+          <DataItemMovableRow
+            key={equiv.server}
+            no={equiv.no}
+            moveRow={moveRow}
+            priority={equiv.priority}
+            server={equiv.server}
+            tag={equiv.tag}
+          >
+            <DataItemValue horizontal xs={mobileGrid[0]}>
+              {equiv.server}
+            </DataItemValue>
+            <DataItemValue horizontal xs={mobileGrid[1]}>
+              {equiv.priority}
+            </DataItemValue>
+            <DataItemValue horizontal xs={mobileGrid[2]}>
+              {equiv.tag}
+            </DataItemValue>
+          </DataItemMovableRow>
+        ))}
+      </DataItemBody>
+    </DataItemRoot>
   );
 };
