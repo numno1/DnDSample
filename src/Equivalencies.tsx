@@ -142,7 +142,7 @@ export const DataItemMovableRow: React.FC<DataItemMovableRowProps> = (
     accept: "row",
     // hover():行をdragしている時に呼ばれる(dragしっぱなしだと何度も呼ばれる)
     //       hover()の代わりにdrop()も使える。drop()はdropした時に動作する。
-    // item: dropした行のDnD Object
+    // item: hoverしている行のDnD Object
     // no: drop先の行の番号
     // moveRow(): item.indexとnoを使ってequivsを並べ替えて格納する
     hover(item: DndObject) {
