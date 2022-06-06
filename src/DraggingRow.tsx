@@ -38,12 +38,13 @@ export const DraggingRow: React.FC = () => {
   return (
     <div
       style={{
-        width: 400,
+        width: window.innerWidth,
         position: "absolute",
         top: 0,
         left: 0,
         transform: `translate(${x}px, ${y}px)`,
         opacity: "40%",
+        background: "grey",
         // ↓を入れないと動かない
         pointerEvents: "none"
       }}
